@@ -1,4 +1,6 @@
-﻿using MyStoreManage.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using MyStoreManage.Models;
+using MyStoreManage.session_login;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,8 +28,12 @@ namespace MyStoreManage
         {
             InitializeComponent();
             _storeContext = storeContext;
+            HandleStaffNameNavigate();
         }
-
+        public void HandleStaffNameNavigate()
+        {
+            txblStaffNameNavigate.Text = SessionService.Instance.GetNameInSession();
+        }
         private void btnInsert_Click(object sender, RoutedEventArgs e)
         {
 
@@ -68,6 +74,7 @@ namespace MyStoreManage
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
+            SessionService.Instance.ClearSession();
             var mainWindow = new MainWindow(_storeContext);
             this.Close();
             mainWindow.Show();
@@ -81,6 +88,15 @@ namespace MyStoreManage
             windowProductManage.Show();
             e.Handled = true;
         }
+
+        private void btnOpenMyAccount_Click(object sender, RoutedEventArgs e)
+        {
+            var WindowMyProfile = new WindowMyProfile(_storeContext);
+            this.Close();
+            WindowMyProfile.Show();
+            e.Handled = true;
+        }
+
     }
 }
 

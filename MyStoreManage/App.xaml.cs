@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyStoreManage.Models;
+using MyStoreManage.session_login;
 using System.Configuration;
 using System.Data;
 using System.Windows;
@@ -17,10 +18,10 @@ namespace MyStoreManage
         protected override void OnStartup(StartupEventArgs e)
         {
             var serviceCollecction = new ServiceCollection();
-            serviceCollecction.AddTransient<WindowMyProfile>();
+            serviceCollecction.AddTransient<MainWindow>();
             serviceCollecction.AddScoped<MyStoreContext>();
             serviceProvider = serviceCollecction.BuildServiceProvider();
-            serviceProvider.GetRequiredService<WindowMyProfile>().Show();
+            serviceProvider.GetRequiredService<MainWindow>().Show();   
         }
     }
 
