@@ -71,7 +71,7 @@
             <Canvas Grid.Column="1">
             <!--search box-->
             <Label Canvas.Left="10" Canvas.Top="20" HorizontalAlignment="Left" FontSize="15" VerticalAlignment="Center">Type To Search Products ...</Label>
-            <TextBox x:Name="txtSearch" Grid.Row="3" Height="25" Width="300" VerticalAlignment="Top" FontSize="15" Canvas.Left="200" Canvas.Top="23" HorizontalAlignment="Left"/>
+            <TextBox x:Name="txtSearch" Grid.Row="3" Height="25" Width="300" VerticalAlignment="Top" FontSize="15" Canvas.Left="200" Canvas.Top="23" HorizontalAlignment="Left" TextChanged="txtSearch_TextChanged"/>
             <Button x:Name="btnSearch" Click="btnSearch_Click" Canvas.Left="505" Canvas.Top="23" Height="25" RenderTransformOrigin="-0.583,-0.438" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White" BorderBrush="White" Cursor="Hand">
                 <Icon:PackIconMaterial Kind="Magnify"  Width="20" Height="15" RenderTransformOrigin="0.45,-0.664"></Icon:PackIconMaterial>
             </Button>

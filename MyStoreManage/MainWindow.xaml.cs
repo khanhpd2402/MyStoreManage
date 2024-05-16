@@ -45,7 +45,7 @@ namespace MyStoreManage
                     else if(aStaff.Role == 2)
                     {
                         var windowOrderManage = new WindowOrderManage(_storeContext);
-                        windowOrderManage.Show();
+                        windowOrderManage.Show();                     
                     }
                     this.Close();
                     e.Handled = true;
