@@ -1,0 +1,53 @@
+﻿<Window x:Class="MyStoreManage.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyStoreManage"
+        mc:Ignorable="d"
+        Title="Login"  MinWidth="800" MaxWidth="800"  
+        MinHeight="450" MaxHeight="450" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <LinearGradientBrush x:Key="MyBackgroundBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FFCA3CC2" Offset="0"/>
+            <GradientStop Color="#FF42A5F5" Offset="0.5"/>
+            <GradientStop Color="#FFFFD54F" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Resources>
+    <Grid Background="{StaticResource MyBackgroundBrush}">
+        <Grid Margin="35" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="350" />
+            </Grid.ColumnDefinitions>
+            <Canvas>
+                <!--<Rectangle Width="380" Height="366" Fill="#33000000" HorizontalAlignment="Center" VerticalAlignment="Top"/>-->
+                <Label Canvas.Left="69" Canvas.Top="102" FontSize="22" FontFamily="Lucida Handwriting" >Welcome To My Store</Label>
+                <TextBlock Canvas.Left="205" Canvas.Top="182" FontSize="17" Width="150" Height="55" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Segoe Print">Sign in to continue access</TextBlock>
+            </Canvas>
+            <!-- Right Side -->
+            <Border Grid.Column="1" Background="White" CornerRadius="10" Margin="0">
+                <StackPanel Margin="20">
+                    <TextBlock Text="Sign In" FontWeight="Bold" FontSize="24" />
+                    <Separator Background="{StaticResource MyBackgroundBrush}" Margin="0 5 0 15" Height="2"></Separator>
+                    <Label FontWeight="Bold">Staff Name</Label>
+                    <StackPanel Orientation="Horizontal">
+                        <Icon:PackIconMaterial Kind="Account"  FontSize="15" Margin="10 10 10 10"></Icon:PackIconMaterial>
+                        <TextBox Name="txtStaffName" Height="25" Width="270"  FontSize="15" VerticalAlignment="Center"></TextBox>
+                    </StackPanel>
+                    <Label FontWeight="Bold">Password</Label>
+                    <StackPanel Orientation="Horizontal">
+                        <Icon:PackIconMaterial Kind="Lock"  FontSize="15" Margin="10 10 10 10"></Icon:PackIconMaterial>
+                        <PasswordBox Name="txtPass" Height="25" Width="270"  FontSize="15" VerticalAlignment="Center"></PasswordBox>
+                    </StackPanel>
+                    <Button Name="btnLogin" Click="btnLogin_Click" Margin="0,20,0,0" Padding="5" Background="DarkBlue" Foreground="AntiqueWhite" Cursor="Hand">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Login" FontSize="20" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
