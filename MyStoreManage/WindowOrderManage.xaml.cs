@@ -1,19 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyStoreManage.Models;
 using MyStoreManage.session_login;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MyStoreManage
 {
@@ -27,12 +15,59 @@ namespace MyStoreManage
         {
             InitializeComponent();
             _storeContext = storeContext;
+            HandleGirdView();
             HandleStaffNameNavigate();
+
+            dpEndDate.SelectedDate = DateTime.Now.Date;
+            dpStartDate.SelectedDate = DateTime.Now.Date.AddMonths(-1);
+            HandleButtonAdmin();
         }
         public void HandleStaffNameNavigate()
         {
             txblStaffNameNavigate.Text = SessionService.Instance.GetNameInSession();
         }
+
+        //public void HandleAdminGirdView()
+        //{
+        //    lvOrders.ItemsSource = _storeContext.Orders.Include(x => x.Staff).ToList();
+        //}
+
+        //public void HandleStaffGirdView()
+        //{
+        //    var idStaff = SessionService.Instance.GetStaffIdInSession();
+        //    lvOrders.ItemsSource = _storeContext.Orders.Include(x => x.Staff).Where(od => od.StaffId == idStaff).ToList();
+        //}
+
+        public void HandleGirdView()
+        {
+            var role = SessionService.Instance.GetRoleInSession();
+            if (role == 1)
+            {
+                lvOrders.ItemsSource = _storeContext.Orders.Include(x => x.Staff).ToList();
+            }
+            else if (role == 2)
+            {
+                var idStaff = SessionService.Instance.GetStaffIdInSession();
+                lvOrders.ItemsSource = _storeContext.Orders.Include(x => x.Staff).Where(od => od.StaffId == idStaff).ToList();
+            }
+
+        }
+        public void HandleButtonAdmin()
+        {
+            var role = SessionService.Instance.GetRoleInSession();
+            if (role == 1)
+            {
+                //
+            }
+            else if (role == 2)
+            {
+                lbsearchID.Visibility = Visibility.Hidden;
+                txtSearch.Visibility = Visibility.Hidden;
+                btnSearch.Visibility = Visibility.Hidden;
+            }
+
+        }
+
         private void btnInsert_Click(object sender, RoutedEventArgs e)
         {
 
@@ -50,8 +85,44 @@ namespace MyStoreManage
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
+            string searchQuery = txtSearch.Text.Trim();
 
+            if (int.TryParse(searchQuery, out int searchId))
+            {
+                // Tìm kiếm theo id
+                var filteredOrders = _storeContext.Orders
+                    .Include(x => x.Staff)
+                    .Where(od => od.StaffId == searchId)
+                    .ToList();
+
+                lvOrders.ItemsSource = filteredOrders;
+            }
+            else
+            {
+                // Tìm kiếm theo name
+                var filteredOrders = _storeContext.Orders
+                    .Include(x => x.Staff)
+                    .Where(od => od.Staff.Name.Contains(searchQuery))
+                    .ToList();
+
+                lvOrders.ItemsSource = filteredOrders;
+            }
         }
+
+        private void btnSearchDate_Click(object sender, RoutedEventArgs e)
+        {
+            DateTime endDate = dpEndDate.SelectedDate ?? DateTime.Now.Date;
+            DateTime startDate = dpStartDate.SelectedDate ?? endDate.AddMonths(-1);
+
+            var filteredOrders = _storeContext.Orders
+                .Include(x => x.Staff)
+                .Where(od => od.OrderDate >= startDate.Date && od.OrderDate <= endDate.Date)
+                .ToList();
+
+            lvOrders.ItemsSource = filteredOrders;
+        }
+
+
         //ToolBar
         private void btnOpenStaffManage_Click(object sender, RoutedEventArgs e)
         {
@@ -90,6 +161,22 @@ namespace MyStoreManage
             this.Close();
             WindowMyProfile.Show();
             e.Handled = true;
+        }
+
+        private void btnDetails_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (int.TryParse(txtOrderID.Text, out int idDetail))
+            {
+                var windowOrderDetails = new WindowOrderDetailManage(idDetail, _storeContext);
+                this.Close();
+                windowOrderDetails.Show();
+                e.Handled = true;
+            }
+            else
+            {
+                // Xử lý lỗi khi không thể chuyển đổi giá trị idDetail sang kiểu int
+            }
         }
     }
 }

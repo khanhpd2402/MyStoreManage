@@ -95,25 +95,27 @@
                 <Separator Margin="5,47,530,228" Height="1" Background="Red"></Separator>
                 <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Width="800">
                     <StackPanel Margin="20 60 20 15">
-                        <Label Name="lblProductID" Content="ProductID"></Label>
-                        <TextBox Name="txtProductID" HorizontalAlignment="Left"  VerticalAlignment="Center"
+                        <Label Name="lblOrderId" Content="OrderId"></Label>
+                        <TextBox Name="txtOrderId" HorizontalAlignment="Left"  VerticalAlignment="Center"
                         IsReadOnly="True" Height="25" Width="350" FontSize="15"
-                        Text="{Binding Path=ProductId, Mode=Oneway}"
-                        DataContext="{Binding ElementName=lvProducts, Path=SelectedItem}"></TextBox>
+                        Text="{Binding Path=OrderId, Mode=Oneway}"
+                        DataContext="{Binding ElementName=lvOrderDetails, Path=SelectedItem}"></TextBox>
                         <Label Name="lblProductName" Content="Product Name"></Label>
                         <TextBox Name="txtProductName" HorizontalAlignment="Left" 
                         Height="25" Width="350"  VerticalAlignment="Center" FontSize="15"
-                        Text="{Binding Path=ProductName, Mode=Oneway}"
-                        DataContext="{Binding ElementName=lvProducts, Path=SelectedItem}"></TextBox>
+                        Text="{Binding Path=Product.ProductName, Mode=Oneway}"
+                        DataContext="{Binding ElementName=lvOrderDetails, Path=SelectedItem}"></TextBox>
                         <Label Name="lblUnitPrice" Content="Unit Price"></Label>
                         <TextBox Name="txtUnitPrice" HorizontalAlignment="Left" VerticalAlignment="Center"
                         Height="25" Width="350" FontSize="15"
                         Text="{Binding Path=UnitPrice, Mode=Oneway}"
-                        DataContext="{Binding ElementName=lvProducts, Path=SelectedItem}"></TextBox>
-                        <Label Name="lblCategory" Content="Category"></Label>
-                        <ComboBox Name="cbbCategory" DisplayMemberPath="CategoryName"  Text="{Binding Path= Category.CategoryName, Mode=OneWay}"
-                               DataContext="{Binding Path=SelectedItem, ElementName=lvProducts}">
-                        </ComboBox>
+                        DataContext="{Binding ElementName=lvOrderDetails, Path=SelectedItem}"></TextBox>
+                        <Label Name="lbQuantity" Content="Quantity"></Label>
+                        <TextBox Name="txtQuantity" HorizontalAlignment="Left" VerticalAlignment="Center"
+                        Height="25" Width="350" FontSize="15"
+                        Text="{Binding Path=Quantity, Mode=Oneway}"
+                               DataContext="{Binding ElementName=lvOrderDetails, Path=SelectedItem}">
+                        </TextBox>
                     </StackPanel>
 
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="20 80 20 15">
@@ -125,19 +127,20 @@
                             Click="btnDelete_Click" Cursor="Hand"></Button>
                     </StackPanel>
                 </StackPanel>
-                <ListView Grid.Row="1" Name="lvProducts" Margin="20 0 20 0" Width="auto">
+                <ListView Grid.Row="1" Name="lvOrderDetails" Margin="20 0 20 0" Width="auto">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Product ID" Width="100"
-                                    DisplayMemberBinding="{Binding Path=ProductId}"></GridViewColumn>
+                            <GridViewColumn Header="OrderDetail ID" Width="100"
+                                    DisplayMemberBinding="{Binding Path=OrderDetailId}"></GridViewColumn>
+                            <GridViewColumn Header="Order ID" Width="100"
+                                    DisplayMemberBinding="{Binding Path=OrderId}"></GridViewColumn>
                             <GridViewColumn Header="Product Name" Width="100"
-                                    DisplayMemberBinding="{Binding Path=ProductName}"></GridViewColumn>
+                                    DisplayMemberBinding="{Binding Path=Product.ProductName}"></GridViewColumn>
                             <GridViewColumn Header="Unit Price" Width="100"
                                     DisplayMemberBinding="{Binding Path=UnitPrice}"></GridViewColumn>
-                            <GridViewColumn Header="Category ID" Width="100"
-                                    DisplayMemberBinding="{Binding Path=CategoryId}"></GridViewColumn>
-                            <GridViewColumn Header="Category Name" Width="100"
-                                    DisplayMemberBinding="{Binding Path=Category.CategoryName}"></GridViewColumn>
+                            <GridViewColumn Header="Quantity" Width="100"
+                                    DisplayMemberBinding="{Binding Path=Quantity}"></GridViewColumn>
+                            
                         </GridView>
                     </ListView.View>
                 </ListView>
