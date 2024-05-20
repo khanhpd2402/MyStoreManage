@@ -44,6 +44,15 @@ namespace MyStoreManage
             if (role == 1)
             {
                 lvOrders.ItemsSource = _storeContext.Orders.Include(x => x.Staff).ToList();
+
+                //list order trong vong 1 thang ke tu ngay hien tai
+                //DateTime currentDate = DateTime.Now;
+                //DateTime oneMonthAgo = currentDate.AddMonths(-1);
+                //lvOrders.ItemsSource = _storeContext.Orders
+                //                        .Include(x => x.Staff)
+                //                        .Where(od => od.OrderDate >= oneMonthAgo && od.OrderDate <= currentDate)
+                //                        .ToList();
+
             }
             else if (role == 2)
             {
