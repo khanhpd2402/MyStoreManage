@@ -77,7 +77,7 @@
                 <Button x:Name="btnOpenMyAccount" Click="btnOpenMyAccount_Click" Canvas.Left="625" Canvas.Top="25" Height="45" RenderTransformOrigin="-0.583,-0.438" HorizontalAlignment="Left" VerticalAlignment="Center" Background="#2EB0A1" BorderBrush="#2EB0A1" Cursor="Hand">
                     <StackPanel Orientation="Horizontal" Margin="5">
                         <Icon:PackIconMaterial Kind="Account"  Width="25" Height="30" RenderTransformOrigin="0.45,-0.664" Cursor="Hand"></Icon:PackIconMaterial>
-                        <TextBlock x:Name="txblStaffNameNavigate" Margin="10 0 " Text="khanh" FontSize="25" FontWeight="Bold"></TextBlock>
+                        <TextBlock x:Name="txblStaffNameNavigate" Margin="10 0 " Text="" FontSize="25" FontWeight="Bold"></TextBlock>
                     </StackPanel>
                 </Button>
             </Canvas>

@@ -69,18 +69,34 @@
         <!--Main section-->
         <Border Grid.Column="1" Background="#2EB0A1" CornerRadius="0 30 0 50">
             <Canvas Grid.Column="1">
-            <!--search box-->
-            <Label Canvas.Left="10" Canvas.Top="20" HorizontalAlignment="Left" FontSize="15" VerticalAlignment="Center">Type To Search Products ...</Label>
-            <TextBox x:Name="txtSearch" Grid.Row="3" Height="25" Width="300" VerticalAlignment="Top" FontSize="15" Canvas.Left="200" Canvas.Top="23" HorizontalAlignment="Left" TextChanged="txtSearch_TextChanged"/>
-            <Button x:Name="btnSearch" Click="btnSearch_Click" Canvas.Left="505" Canvas.Top="23" Height="25" RenderTransformOrigin="-0.583,-0.438" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White" BorderBrush="White" Cursor="Hand">
-                <Icon:PackIconMaterial Kind="Magnify"  Width="20" Height="15" RenderTransformOrigin="0.45,-0.664"></Icon:PackIconMaterial>
-            </Button>
+                <!--search box-->
+                <Label Canvas.Left="10" Canvas.Top="20" HorizontalAlignment="Left" FontSize="15" VerticalAlignment="Center">Type To Search Product Name</Label>
+                <TextBox x:Name="txtSearch" Grid.Row="3" Height="25" Width="300" VerticalAlignment="Center" FontSize="15" Canvas.Left="244" Canvas.Top="23" HorizontalAlignment="Left" />
+                <Button x:Name="btnSearch" Click="btnSearch_Click" Canvas.Left="562" Canvas.Top="36" Height="24" RenderTransformOrigin="-0.583,-0.438" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="White" Cursor="Hand">
+                    <Icon:PackIconMaterial Kind="Magnify"  Width="38" Height="15" RenderTransformOrigin="0.45,-0.664" VerticalAlignment="Center">
+                        <Icon:PackIconMaterial.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="-1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Icon:PackIconMaterial.RenderTransform>
+                    </Icon:PackIconMaterial>
+                </Button>
+
+
+
+
+
                 <Button x:Name="btnOpenMyAccount" Click="btnOpenMyAccount_Click" Canvas.Left="625" Canvas.Top="25" Height="45" RenderTransformOrigin="-0.583,-0.438" HorizontalAlignment="Left" VerticalAlignment="Center" Background="#2EB0A1" BorderBrush="#2EB0A1" Cursor="Hand">
                     <StackPanel Orientation="Horizontal" Margin="5">
                         <Icon:PackIconMaterial Kind="Account"  Width="25" Height="30" RenderTransformOrigin="0.45,-0.664" Cursor="Hand"></Icon:PackIconMaterial>
                         <TextBlock x:Name="txblStaffNameNavigate" Margin="10 0 " Text="" FontSize="25" FontWeight="Bold"></TextBlock>
                     </StackPanel>
                 </Button>
+                <Label Canvas.Left="10" Canvas.Top="55" FontSize="15" Content="Type To Search Unit Price" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <TextBox x:Name="txtSearch_Copy" Height="25" Width="300" FontSize="15" Canvas.Left="244" Canvas.Top="57"     HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
             </Canvas>
         </Border>
@@ -131,7 +147,7 @@
                             <GridViewColumn Header="Product ID" Width="100"
                                         DisplayMemberBinding="{Binding Path=ProductId}"></GridViewColumn>
                             <GridViewColumn Header="Product Name" Width="100"
-                                        DisplayMemberBinding="{Binding Path=ProductName}"></GridViewColumn> 
+                                        DisplayMemberBinding="{Binding Path=ProductName}"></GridViewColumn>
                             <GridViewColumn Header="Unit Price" Width="100"
                                         DisplayMemberBinding="{Binding Path=UnitPrice}"></GridViewColumn>
                             <GridViewColumn Header="Category ID" Width="100"
