@@ -28,6 +28,7 @@ namespace MyStoreManage
             InitializeComponent();
             _storeContext = storeContext;
             HandleStaffNameNavigate();
+            HandleButttonRole();
         }
         public void HandleStaffNameNavigate()
         {
@@ -37,7 +38,20 @@ namespace MyStoreManage
         {
 
         }
-
+        public void HandleButttonRole()
+        {
+            var role = SessionService.Instance.GetRoleInSession();
+            if (role == 1)
+            {
+                btnOpenOrdersManage.Visibility = Visibility.Hidden;
+            }
+            else if (role == 2)
+            {
+                btnOpenProductsManage.Visibility = Visibility.Hidden;
+                btnOpenCategoriesManage.Visibility = Visibility.Hidden;
+                btnOpenStaffManage.Visibility = Visibility.Hidden;
+            }
+        }
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
 
@@ -98,6 +112,11 @@ namespace MyStoreManage
             this.Close();
             WindowMyProfile.Show();
             e.Handled = true;
+        }
+
+        private void btnOpenOrdersReport_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
