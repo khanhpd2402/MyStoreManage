@@ -87,16 +87,23 @@ namespace MyStoreManage
         {
             try
             {
-                var staffToDelete = _storeContext.Staffs.FirstOrDefault(x => x.StaffId == int.Parse(txtStaffID.Text));
-                if (staffToDelete != null)
+                // Hiển thị hộp thoại xác nhận
+                MessageBoxResult result = MessageBox.Show("Do you want to delete?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                // Nếu người dùng chọn Yes
+                if (result == MessageBoxResult.Yes)
                 {
-                    _storeContext.Staffs.Remove(staffToDelete);
-                    _storeContext.SaveChanges();
-                    LoadStaff();
-                }
-                else
-                {
-                    MessageBox.Show("Staff does not exist");
+                    var staffToDelete = _storeContext.Staffs.FirstOrDefault(x => x.StaffId == int.Parse(txtStaffID.Text));
+                    if (staffToDelete != null)
+                    {
+                        _storeContext.Staffs.Remove(staffToDelete);
+                        _storeContext.SaveChanges();
+                        LoadStaff();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Staff does not exist");
+                    }
                 }
             }
             catch (Exception ex)
@@ -104,6 +111,7 @@ namespace MyStoreManage
                 MessageBox.Show(ex.Message, "Delete Staff");
             }
         }
+
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
