@@ -2,56 +2,48 @@
 using MyStoreManage.Models;
 using MyStoreManage.session_login;
 using System.Windows;
+using System.Windows.Controls;
+
 
 namespace MyStoreManage
 {
     /// <summary>
-    /// Interaction logic for WindowOrderManage.xaml
+    /// Interaction logic for WindowReport.xaml
     /// </summary>
-    public partial class WindowOrderManage : Window
+    public partial class WindowReport : Window
     {
         private readonly MyStoreContext _storeContext;
-        public WindowOrderManage(MyStoreContext storeContext)
+        public WindowReport(MyStoreContext storeContext)
         {
             InitializeComponent();
             _storeContext = storeContext;
-            HandleGirdView();
             HandleStaffNameNavigate();
+            HandleGirdView();
 
             dpEndDate.SelectedDate = DateTime.Now.Date;
             dpStartDate.SelectedDate = DateTime.Now.Date.AddMonths(-1);
             HandleButtonAdmin();
         }
+
         public void HandleStaffNameNavigate()
         {
             txblStaffNameNavigate.Text = SessionService.Instance.GetNameInSession();
         }
-
-        //public void HandleAdminGirdView()
-        //{
-        //    lvOrders.ItemsSource = _storeContext.Orders.Include(x => x.Staff).ToList();
-        //}
-
-        //public void HandleStaffGirdView()
-        //{
-        //    var idStaff = SessionService.Instance.GetStaffIdInSession();
-        //    lvOrders.ItemsSource = _storeContext.Orders.Include(x => x.Staff).Where(od => od.StaffId == idStaff).ToList();
-        //}
 
         public void HandleGirdView()
         {
             var role = SessionService.Instance.GetRoleInSession();
             if (role == 1)
             {
-                lvOrders.ItemsSource = _storeContext.Orders.Include(x => x.Staff).ToList();
+                //lvOrders.ItemsSource = _storeContext.Orders.Include(x => x.Staff).ToList();
 
                 //list order trong vong 1 thang ke tu ngay hien tai
-                //DateTime currentDate = DateTime.Now;
-                //DateTime oneMonthAgo = currentDate.AddMonths(-1);
-                //lvOrders.ItemsSource = _storeContext.Orders
-                //                        .Include(x => x.Staff)
-                //                        .Where(od => od.OrderDate >= oneMonthAgo && od.OrderDate <= currentDate)
-                //                        .ToList();
+                DateTime currentDate = DateTime.Now;
+                DateTime oneMonthAgo = currentDate.AddMonths(-1);
+                lvOrders.ItemsSource = _storeContext.Orders
+                                        .Include(x => x.Staff)
+                                        .Where(od => od.OrderDate >= oneMonthAgo && od.OrderDate <= currentDate)
+                                        .ToList();
 
             }
             else if (role == 2)
@@ -61,35 +53,18 @@ namespace MyStoreManage
             }
 
         }
-        public void HandleButtonAdmin()
-        {
-            var role = SessionService.Instance.GetRoleInSession();
-            if (role == 1)
-            {
-                //
-            }
-            else if (role == 2)
-            {
-                lbsearchID.Visibility = Visibility.Hidden;
-                txtSearch.Visibility = Visibility.Hidden;
-                btnSearch.Visibility = Visibility.Hidden;
-            }
 
+        public void HandleLoadGirdViewDetail(int idDetail)
+        {
+            lvOrderDetails.ItemsSource = _storeContext.OrderDetails.Where(od => od.OrderId == idDetail).ToList();
         }
 
-        private void btnInsert_Click(object sender, RoutedEventArgs e)
+        private void DetailButton_Click(object sender, RoutedEventArgs e)
         {
+            var button = sender as Button;
+            var orderId = (int)button.Tag;
 
-        }
-
-        private void btnUpdate_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btnDelete_Click(object sender, RoutedEventArgs e)
-        {
-
+            HandleLoadGirdViewDetail(orderId);
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
@@ -118,6 +93,22 @@ namespace MyStoreManage
             }
         }
 
+        public void HandleButtonAdmin()
+        {
+            var role = SessionService.Instance.GetRoleInSession();
+            if (role == 1)
+            {
+                //
+            }
+            else if (role == 2)
+            {
+                lbsearchID.Visibility = Visibility.Hidden;
+                txtSearch.Visibility = Visibility.Hidden;
+                btnSearch.Visibility = Visibility.Hidden;
+            }
+
+        }
+
         private void btnSearchDate_Click(object sender, RoutedEventArgs e)
         {
             DateTime endDate = dpEndDate.SelectedDate ?? DateTime.Now.Date;
@@ -131,13 +122,11 @@ namespace MyStoreManage
             lvOrders.ItemsSource = filteredOrders;
         }
 
-
-        //ToolBar
-        private void btnOpenStaffManage_Click(object sender, RoutedEventArgs e)
+        private void btnOpenOrdersManage_Click(object sender, RoutedEventArgs e)
         {
-            var windowStaffManage = new WindowStaffManage(_storeContext);
+            var windowOrderManage = new WindowOrderManage(_storeContext);
             this.Close();
-            windowStaffManage.Show();
+            windowOrderManage.Show();
             e.Handled = true;
         }
 
@@ -164,13 +153,6 @@ namespace MyStoreManage
             windowCategoryManage.Show();
             e.Handled = true;
         }
-        private void btnOpenMyAccount_Click(object sender, RoutedEventArgs e)
-        {
-            var WindowMyProfile = new WindowMyProfile(_storeContext);
-            this.Close();
-            WindowMyProfile.Show();
-            e.Handled = true;
-        }
 
         private void btnOpenReport_Click(object sender, RoutedEventArgs e)
         {
@@ -180,20 +162,20 @@ namespace MyStoreManage
             e.Handled = true;
         }
 
-        private void btnDetails_Click(object sender, RoutedEventArgs e)
+        private void btnOpenStaffManage_Click(object sender, RoutedEventArgs e)
         {
+            var windowStaffManage = new WindowStaffManage(_storeContext);
+            this.Close();
+            windowStaffManage.Show();
+            e.Handled = true;
+        }
 
-            if (int.TryParse(txtOrderID.Text, out int idDetail))
-            {
-                var windowOrderDetails = new WindowOrderDetailManage(idDetail, _storeContext);
-                this.Close();
-                windowOrderDetails.Show();
-                e.Handled = true;
-            }
-            else
-            {
-                // Xử lý lỗi khi không thể chuyển đổi giá trị idDetail sang kiểu int
-            }
+        private void btnOpenMyAccount_Click(object sender, RoutedEventArgs e)
+        {
+            var WindowMyProfile = new WindowMyProfile(_storeContext);
+            this.Close();
+            WindowMyProfile.Show();
+            e.Handled = true;
         }
     }
 }

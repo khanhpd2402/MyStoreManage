@@ -56,6 +56,13 @@ namespace MyStoreManage
             windowOrderManage.Show();
             e.Handled = true;
         }
+        private void btnOpenReport_Click(object sender, RoutedEventArgs e)
+        {
+            var windowReport = new WindowReport(_storeContext);
+            this.Close();
+            windowReport.Show();
+            e.Handled = true;
+        }
 
         private void btnOpenStaffManage_Click(object sender, RoutedEventArgs e)
         {

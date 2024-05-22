@@ -1,19 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MyStoreManage.Models;
+﻿using MyStoreManage.Models;
 using MyStoreManage.session_login;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MyStoreManage
 {
@@ -88,6 +75,15 @@ namespace MyStoreManage
             windowProductManage.Show();
             e.Handled = true;
         }
+
+        private void btnOpenReport_Click(object sender, RoutedEventArgs e)
+        {
+            var windowReport = new WindowReport(_storeContext);
+            this.Close();
+            windowReport.Show();
+            e.Handled = true;
+        }
+
 
         private void btnOpenMyAccount_Click(object sender, RoutedEventArgs e)
         {
