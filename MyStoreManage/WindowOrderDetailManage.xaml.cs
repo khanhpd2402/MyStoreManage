@@ -1,19 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MyStoreManage.Models;
+﻿using MyStoreManage.Models;
 using MyStoreManage.session_login;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MyStoreManage
 {
@@ -23,16 +10,25 @@ namespace MyStoreManage
     public partial class WindowOrderDetailManage : Window
     {
         private readonly MyStoreContext _storeContext;
-        public WindowOrderDetailManage(MyStoreContext storeContext)
+
+        public WindowOrderDetailManage(int idDetail, MyStoreContext storeContext)
         {
             InitializeComponent();
             _storeContext = storeContext;
             HandleStaffNameNavigate();
+            HandleBeforeLoadGirdView(idDetail);
         }
         public void HandleStaffNameNavigate()
         {
             txblStaffNameNavigate.Text = SessionService.Instance.GetNameInSession();
+
         }
+
+        public void HandleBeforeLoadGirdView(int idDetail)
+        {
+            lvOrderDetails.ItemsSource = _storeContext.OrderDetails.Where(od => od.OrderId == idDetail).ToList();
+        }
+
         private void btnInsert_Click(object sender, RoutedEventArgs e)
         {
 
@@ -58,6 +54,13 @@ namespace MyStoreManage
             var windowOrderManage = new WindowOrderManage(_storeContext);
             this.Close();
             windowOrderManage.Show();
+            e.Handled = true;
+        }
+        private void btnOpenReport_Click(object sender, RoutedEventArgs e)
+        {
+            var windowReport = new WindowReport(_storeContext);
+            this.Close();
+            windowReport.Show();
             e.Handled = true;
         }
 

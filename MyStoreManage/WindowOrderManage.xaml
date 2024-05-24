@@ -57,7 +57,14 @@
                         <TextBlock Margin="10 0 " FontSize="14" Text="Staff Manage         " FontWeight="Bold"></TextBlock>
                     </StackPanel>
                 </Button>
-                <Button x:Name="btnLogout" Click="btnLogout_Click" Margin="10 250 10 0" BorderBrush="#2EB0A1" Height="40" Background="#2EB0A1" Cursor="Hand">
+                <Separator Margin="20 20 20 0" Height="1" Background="#1F786E"></Separator>
+                <Button x:Name="btnOpenReport" Click="btnOpenReport_Click" Margin="10 5 10 0" BorderBrush="#2EB0A1" Height="40" Background="#2EB0A1" Cursor="Hand">
+                    <StackPanel Orientation="Horizontal" >
+                        <Icon:PackIconMaterial Kind="Book" FontSize="15"></Icon:PackIconMaterial>
+                        <TextBlock Margin="10 0 " FontSize="14" Text="Report                   " FontWeight="Bold"></TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnLogout" Click="btnLogout_Click" Margin="10 200 10 0" BorderBrush="#2EB0A1" Height="40" Background="#2EB0A1" Cursor="Hand">
                     <StackPanel Orientation="Horizontal" >
                         <Icon:PackIconMaterial Kind="Logout" FontSize="15"></Icon:PackIconMaterial>
                         <TextBlock Margin="10 0 " FontSize="14" Text="Logout                 " FontWeight="Bold"></TextBlock>
@@ -70,11 +77,22 @@
         <Border Grid.Column="1" Background="#2EB0A1" CornerRadius="0 30 0 50">
             <Canvas Grid.Column="1">
                 <!--search box-->
-                <Label Canvas.Left="24" Canvas.Top="21" HorizontalAlignment="Center" FontSize="15" VerticalAlignment="Top">Type To Search Orders ...</Label>
-                <TextBox x:Name="txtSearch" Grid.Row="3" Height="25" Width="300" VerticalAlignment="Top" FontSize="15" Canvas.Left="200" Canvas.Top="23" HorizontalAlignment="Left"/>
-                <Button x:Name="btnSearch" Click="btnSearch_Click" Canvas.Left="505" Canvas.Top="23" Height="25" RenderTransformOrigin="-0.583,-0.438" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White" BorderBrush="White" Cursor="Hand">
+                <Label x:Name="lbsearchID" Canvas.Left="24" Canvas.Top="21" HorizontalAlignment="Center" FontSize="15" VerticalAlignment="Top">Search By Name or ID</Label>
+                <TextBox x:Name="txtSearch" Grid.Row="3" Height="25" Width="319" VerticalAlignment="Center" FontSize="15" Canvas.Left="200" Canvas.Top="23" HorizontalAlignment="Left"/>
+                <Button x:Name="btnSearch" Click="btnSearch_Click" Canvas.Left="550" Canvas.Top="23" Height="25" RenderTransformOrigin="-0.583,-0.438" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White" BorderBrush="White" Cursor="Hand">
                     <Icon:PackIconMaterial Kind="Magnify"  Width="20" Height="15" RenderTransformOrigin="0.45,-0.664" Cursor="Hand"></Icon:PackIconMaterial>
                 </Button>
+
+                <!--search time-->
+                <Label Canvas.Left="24" Canvas.Top="55" HorizontalAlignment="Center" FontSize="15" VerticalAlignment="Top">Search by Time</Label>
+                <!--<Label Canvas.Left="151" Canvas.Top="55" HorizontalAlignment="Left" FontSize="15" VerticalAlignment="Center">From</Label>-->
+                <DatePicker x:Name="dpStartDate" Canvas.Left="200" Canvas.Top="55" HorizontalAlignment="Left" FontSize="15" VerticalAlignment="Center" />
+                <Label Canvas.Left="360" Canvas.Top="55" HorizontalAlignment="Center" FontSize="15" VerticalAlignment="Top">To</Label>
+                <DatePicker x:Name="dpEndDate" Canvas.Left="400" Canvas.Top="55" HorizontalAlignment="Center" FontSize="15" VerticalAlignment="Top" />
+                <Button x:Name="btnSearchDate" Click="btnSearchDate_Click" Canvas.Left="550" Canvas.Top="55" Height="25" RenderTransformOrigin="-0.583,-0.438" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White" BorderBrush="White" Cursor="Hand">
+                    <Icon:PackIconMaterial Kind="Magnify"  Width="20" Height="15" RenderTransformOrigin="0.45,-0.664" Cursor="Hand"></Icon:PackIconMaterial>
+                </Button>
+
                 <Button x:Name="btnOpenMyAccount" Click="btnOpenMyAccount_Click" Canvas.Left="625" Canvas.Top="25" Height="45" RenderTransformOrigin="-0.583,-0.438" HorizontalAlignment="Left" VerticalAlignment="Center" Background="#2EB0A1" BorderBrush="#2EB0A1" Cursor="Hand">
                     <StackPanel Orientation="Horizontal" Margin="5">
                         <Icon:PackIconMaterial Kind="Account"  Width="25" Height="30" RenderTransformOrigin="0.45,-0.664" Cursor="Hand"></Icon:PackIconMaterial>
@@ -99,22 +117,18 @@
                         <Label Name="lblOrderID" Content="OrderID"></Label>
                         <TextBox Name="txtOrderID" HorizontalAlignment="Left"  VerticalAlignment="Center"
                         IsReadOnly="True" Height="25" Width="350" FontSize="15"
-                        Text="{Binding Path=ProductId, Mode=Oneway}"
-                        DataContext="{Binding ElementName=lvProducts, Path=SelectedItem}"></TextBox>
+                        Text="{Binding Path=OrderId, Mode=Oneway}"
+                        DataContext="{Binding ElementName=lvOrders, Path=SelectedItem}"></TextBox>
                         <Label Name="lblOrderDate" Content="Order Date"></Label>
                         <DatePicker Name="txtOrderName" HorizontalAlignment="Left" 
                         Height="25" Width="350"  VerticalAlignment="Center" FontSize="15"
-                        Text="{Binding Path=ProductName, Mode=Oneway}"
-                        DataContext="{Binding ElementName=lvProducts, Path=SelectedItem}"></DatePicker>
-                        <Label Name="lblUnitPrice" Content="Unit Price"></Label>
+                        Text="{Binding Path=OrderDate, Mode=Oneway}"
+                        DataContext="{Binding ElementName=lvOrders, Path=SelectedItem}"></DatePicker>
+                        <Label Name="lblStaffName" Content="Staff Name"></Label>
                         <TextBox Name="txtUnitPrice" HorizontalAlignment="Left" VerticalAlignment="Center"
                         Height="25" Width="350" FontSize="15"
-                        Text="{Binding Path=UnitPrice, Mode=Oneway}"
-                        DataContext="{Binding ElementName=lvProducts, Path=SelectedItem}"></TextBox>
-                        <Label Name="lblCategory" Content="Category"></Label>
-                        <ComboBox Name="cbbCategory" DisplayMemberPath="CategoryName"  Text="{Binding Path= Category.CategoryName, Mode=OneWay}"
-                               DataContext="{Binding Path=SelectedItem, ElementName=lvProducts}">
-                        </ComboBox>
+                        Text="{Binding Path=Staff.Name, Mode=Oneway}"
+                        DataContext="{Binding ElementName=lvOrders, Path=SelectedItem}"></TextBox>
                     </StackPanel>
 
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="20 80 20 15">
@@ -124,21 +138,21 @@
                             Click="btnUpdate_Click" Cursor="Hand"></Button>
                         <Button x:Name="btnDelete" Margin="10" Width="80" Content="Delete" BorderBrush="#2EB0A1" Background="#2EB0A1" FontWeight="Bold" Height="25" FontSize="14"
                             Click="btnDelete_Click" Cursor="Hand"></Button>
+                        <Button x:Name="btnDetails" Margin="10" Width="80" Content="Details" BorderBrush="#2EB0A1" Background="#2EB0A1" FontWeight="Bold" Height="25" FontSize="14"
+                            Click="btnDetails_Click" Cursor="Hand"></Button>
                     </StackPanel>
                 </StackPanel>
-                <ListView Grid.Row="1" Name="lvProducts" Margin="20 0 20 0" Width="auto">
+                <ListView Grid.Row="1" Name="lvOrders" Margin="20 0 20 0" Width="auto">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Product ID" Width="100"
-                                    DisplayMemberBinding="{Binding Path=ProductId}"></GridViewColumn>
-                            <GridViewColumn Header="Product Name" Width="100"
-                                    DisplayMemberBinding="{Binding Path=ProductName}"></GridViewColumn>
-                            <GridViewColumn Header="Unit Price" Width="100"
-                                    DisplayMemberBinding="{Binding Path=UnitPrice}"></GridViewColumn>
-                            <GridViewColumn Header="Category ID" Width="100"
-                                    DisplayMemberBinding="{Binding Path=CategoryId}"></GridViewColumn>
-                            <GridViewColumn Header="Category Name" Width="100"
-                                    DisplayMemberBinding="{Binding Path=Category.CategoryName}"></GridViewColumn>
+                            <GridViewColumn Header="Order ID" Width="100"
+                                    DisplayMemberBinding="{Binding Path=OrderId}"></GridViewColumn>
+                            <GridViewColumn Header="Order Date" Width="100"
+                                    DisplayMemberBinding="{Binding Path=OrderDate}"></GridViewColumn>
+                            <GridViewColumn Header="Staff ID" Width="100"
+                                    DisplayMemberBinding="{Binding Path=StaffId}"></GridViewColumn>
+                            <GridViewColumn Header="Staff Name" Width="100"
+                                    DisplayMemberBinding="{Binding Path=Staff.Name}"></GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>
