@@ -1,6 +1,19 @@
 ﻿using MyStoreManage.Models;
 using MyStoreManage.session_login;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace MyStoreManage
 {
@@ -16,15 +29,30 @@ namespace MyStoreManage
             _context = context;
             HandleStaffInfoBeforeLoaded();
             HandleStaffNameNavigate();
+            HandleButttonRole();
         }
         public void HandleStaffNameNavigate()
         {
             txblStaffNameNavigate.Text = SessionService.Instance.GetNameInSession();
         }
+        public void HandleButttonRole()
+        {
+            var role = SessionService.Instance.GetRoleInSession();
+            if (role == 1)
+            {
+                btnOpenOrdersManage.Visibility = Visibility.Hidden;
+            }
+            else if (role == 2)
+            {
+                btnOpenProductsManage.Visibility = Visibility.Hidden;
+                btnOpenCategoriesManage.Visibility = Visibility.Hidden;
+                btnOpenStaffManage.Visibility = Visibility.Hidden;
+            }
+        }
         public void HandleStaffInfoBeforeLoaded()
         {
             var staffInfo = _context.Staffs.FirstOrDefault(x => x.StaffId == SessionService.Instance.GetStaffIdInSession());
-            if (staffInfo != null)
+            if(staffInfo != null)
             {
                 txtStaffID.Text = staffInfo.StaffId.ToString();
                 txtStaffName.Text = staffInfo.Name;
@@ -72,14 +100,6 @@ namespace MyStoreManage
             e.Handled = true;
         }
 
-        private void btnOpenReport_Click(object sender, RoutedEventArgs e)
-        {
-            var windowReport = new WindowReport(_context);
-            this.Close();
-            windowReport.Show();
-            e.Handled = true;
-        }
-
         private void btnEditName_Click(object sender, RoutedEventArgs e)
         {
             txtStaffName.IsReadOnly = false;
@@ -115,9 +135,9 @@ namespace MyStoreManage
             var password = txtPassword.Password;
             var password2 = txtPassword_2.Password;
             var staffInfor = _context.Staffs.FirstOrDefault(x => x.StaffId == SessionService.Instance.GetStaffIdInSession());
-            if (staffInfor != null && staffInfor.Password == oldPassWord)
+            if(staffInfor != null && staffInfor.Password ==oldPassWord)
             {
-                if (password == password2)
+                if(password == password2)
                 {
                     staffInfor.Password = password;
                     _context.Update(staffInfor);
@@ -145,34 +165,38 @@ namespace MyStoreManage
             var staffName = txtStaffName.Text.Trim();
             int staffId = Int32.Parse(txtStaffID.Text);
             var oldStaffInfo = _context.Staffs.FirstOrDefault(x => x.StaffId == staffId);
-
-            if (oldStaffInfo.Name == staffName)
-            {
-                //nguoi dung chua thay doi ten dang nhap thi khong lam gi
-            }
-            else if (_context.Staffs.Any(x => x.Name == staffName && x.StaffId != staffId))
-            {
-                MessageBox.Show("Staff name already exists!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else if (string.IsNullOrEmpty(staffName))
-            {
-                MessageBox.Show("Staff name must not be blank!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else
-            {
-                oldStaffInfo.Name = staffName;
-                _context.Update(oldStaffInfo);
-                _context.SaveChanges();
-                MessageBox.Show("Edit name staff success. Please login again!", "Update Staff Name", MessageBoxButton.OK, MessageBoxImage.Information);
-                SessionService.Instance.ClearSession();
-                var mainWindow = new MainWindow(_context);
-                this.Close();
-                mainWindow.Show();
-                e.Handled = true;
+            
+                if(oldStaffInfo.Name == staffName)
+                {
+                    //nguoi dung chua thay doi ten dang nhap thi khong lam gi
+                }
+                else if (_context.Staffs.Any(x => x.Name == staffName && x.StaffId != staffId))
+                {
+                    MessageBox.Show("Staff name already exists!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }else if (string.IsNullOrEmpty(staffName))
+                {
+                    MessageBox.Show("Staff name must not be blank!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    oldStaffInfo.Name = staffName;
+                    _context.Update(oldStaffInfo);  
+                    _context.SaveChanges();
+                    MessageBox.Show("Edit name staff success. Please login again!", "Update Staff Name", MessageBoxButton.OK, MessageBoxImage.Information);
+                    SessionService.Instance.ClearSession();
+                    var mainWindow = new MainWindow(_context);
+                    this.Close();
+                    mainWindow.Show();
+                    e.Handled = true;
             }
         }
 
         private void btnOpenMyAccount_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnOpenOrdersReport_Click(object sender, RoutedEventArgs e)
         {
 
         }

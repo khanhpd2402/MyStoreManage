@@ -31,7 +31,7 @@ namespace MyStoreManage.Models
                                            .SetBasePath(Directory.GetCurrentDirectory())
                                            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             IConfigurationRoot configuration = builder.Build();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DBcontext"));
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("MyCnn"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

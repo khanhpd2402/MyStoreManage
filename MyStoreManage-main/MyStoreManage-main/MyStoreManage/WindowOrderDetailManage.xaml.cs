@@ -1,20 +1,34 @@
-﻿using MyStoreManage.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using MyStoreManage.Models;
 using MyStoreManage.session_login;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace MyStoreManage
 {
     /// <summary>
-    /// Interaction logic for WindowStaffManage.xaml
+    /// Interaction logic for WindowOrderDetailManage.xaml
     /// </summary>
-    public partial class WindowStaffManage : Window
+    public partial class WindowOrderDetailManage : Window
     {
         private readonly MyStoreContext _storeContext;
-        public WindowStaffManage(MyStoreContext storeContext)
+        public WindowOrderDetailManage(MyStoreContext storeContext)
         {
             InitializeComponent();
             _storeContext = storeContext;
             HandleStaffNameNavigate();
+            HandleButttonRole();
         }
         public void HandleStaffNameNavigate()
         {
@@ -24,7 +38,20 @@ namespace MyStoreManage
         {
 
         }
-
+        public void HandleButttonRole()
+        {
+            var role = SessionService.Instance.GetRoleInSession();
+            if (role == 1)
+            {
+                btnOpenOrdersManage.Visibility = Visibility.Hidden;
+            }
+            else if (role == 2)
+            {
+                btnOpenProductsManage.Visibility = Visibility.Hidden;
+                btnOpenCategoriesManage.Visibility = Visibility.Hidden;
+                btnOpenStaffManage.Visibility = Visibility.Hidden;
+            }
+        }
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
 
@@ -45,6 +72,14 @@ namespace MyStoreManage
             var windowOrderManage = new WindowOrderManage(_storeContext);
             this.Close();
             windowOrderManage.Show();
+            e.Handled = true;
+        }
+
+        private void btnOpenStaffManage_Click(object sender, RoutedEventArgs e)
+        {
+            var windowStaffManage = new WindowStaffManage(_storeContext);
+            this.Close();
+            windowStaffManage.Show();
             e.Handled = true;
         }
 
@@ -79,13 +114,9 @@ namespace MyStoreManage
             e.Handled = true;
         }
 
-        private void btnOpenReport_Click(object sender, RoutedEventArgs e)
+        private void btnOpenOrdersReport_Click(object sender, RoutedEventArgs e)
         {
-            var windowReport = new WindowReport(_storeContext);
-            this.Close();
-            windowReport.Show();
-            e.Handled = true;
-        }
 
+        }
     }
 }
