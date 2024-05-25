@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +14,7 @@ namespace MyStoreManage.Models
         public MyStoreContext()
         {
         }
+        static String ConnectionStrings = "server =ADMIN; database = MyStore;uid=sa;pwd=sa;TrustServerCertificate=true";
 
         public MyStoreContext(DbContextOptions<MyStoreContext> options)
             : base(options)
@@ -85,6 +88,8 @@ namespace MyStoreManage.Models
 
             OnModelCreatingPartial(modelBuilder);
         }
+
+       
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }

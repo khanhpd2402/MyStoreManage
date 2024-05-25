@@ -18,43 +18,22 @@ using System.Windows.Shapes;
 namespace MyStoreManage
 {
     /// <summary>
-    /// Interaction logic for WindowCategoryManage.xaml
+    /// Interaction logic for WindowStaffManage.xaml
     /// </summary>
-    public partial class WindowCategoryManage : Window
+    public partial class WindowStaffManage : Window
     {
         private readonly MyStoreContext _storeContext;
-
-        public WindowCategoryManage(MyStoreContext storeContext)
+        public WindowStaffManage(MyStoreContext storeContext)
         {
             InitializeComponent();
             _storeContext = storeContext;
             HandleStaffNameNavigate();
-            HandleButttonRole();
         }
         public void HandleStaffNameNavigate()
         {
             txblStaffNameNavigate.Text = SessionService.Instance.GetNameInSession();
         }
-        public void HandleButttonRole()
-        {
-            var role = SessionService.Instance.GetRoleInSession();
-            if (role == 1)
-            {
-                btnOpenOrdersManage.Visibility = Visibility.Hidden;
-            }
-            else if (role == 2)
-            {
-                btnOpenProductsManage.Visibility = Visibility.Hidden;
-                btnOpenCategoriesManage.Visibility = Visibility.Hidden;
-                btnOpenStaffManage.Visibility = Visibility.Hidden;
-            }
-        }
         private void btnInsert_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
 
         }
@@ -69,21 +48,16 @@ namespace MyStoreManage
 
         }
 
-        //ToolBar
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
+        //ToolBar
         private void btnOpenOrdersManage_Click(object sender, RoutedEventArgs e)
         {
             var windowOrderManage = new WindowOrderManage(_storeContext);
             this.Close();
             windowOrderManage.Show();
-            e.Handled = true;
-        }
-
-        private void btnOpenStaffManage_Click(object sender, RoutedEventArgs e)
-        {
-            var windowStaffManage = new WindowStaffManage(_storeContext);
-            this.Close();
-            windowStaffManage.Show();
             e.Handled = true;
         }
 
@@ -103,7 +77,13 @@ namespace MyStoreManage
             windowProductManage.Show();
             e.Handled = true;
         }
-
+        private void btnOpenCategoriesManage_Click(object sender, RoutedEventArgs e)
+        {
+            var windowCategoryManage = new WindowCategoryManage(_storeContext);
+            this.Close();
+            windowCategoryManage.Show();
+            e.Handled = true;
+        }
         private void btnOpenMyAccount_Click(object sender, RoutedEventArgs e)
         {
             var WindowMyProfile = new WindowMyProfile(_storeContext);
@@ -111,11 +91,5 @@ namespace MyStoreManage
             WindowMyProfile.Show();
             e.Handled = true;
         }
-
-        private void btnOpenOrdersReport_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
-

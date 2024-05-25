@@ -51,20 +51,13 @@
                     </StackPanel>
                 </Button>
                 <Separator Margin="20 20 20 0" Height="1" Background="#1F786E"></Separator>
-                <Button x:Name="btnOpenOrdersReport" Click="btnOpenOrdersReport_Click" Margin="10 5 10 0" BorderBrush="#2EB0A1" Height="40" Background="#2EB0A1">
-                    <StackPanel Orientation="Horizontal" >
-                        <Icon:PackIconMaterial Kind="ReorderHorizontal" FontSize="15"></Icon:PackIconMaterial>
-                        <TextBlock Margin="10 0 " FontSize="14" Text="Orders Report       " FontWeight="Bold" Cursor="Hand"></TextBlock>
-                    </StackPanel>
-                </Button>
-                <Separator Margin="20 20 20 0" Height="1" Background="#1F786E"></Separator>
                 <Button x:Name="btnOpenStaffManage" Click="btnOpenStaffManage_Click" Margin="10 5 10 0" BorderBrush="#2EB0A1" Height="40" Background="#2EB0A1" Cursor="Hand">
                     <StackPanel Orientation="Horizontal" >
                         <Icon:PackIconMaterial Kind="HumanCane" FontSize="15"></Icon:PackIconMaterial>
                         <TextBlock Margin="10 0 " FontSize="14" Text="Staff Manage         " FontWeight="Bold"></TextBlock>
                     </StackPanel>
                 </Button>
-                <Button x:Name="btnLogout" Click="btnLogout_Click"  Margin="10 200 10 0" BorderBrush="#2EB0A1" Height="40" Background="#2EB0A1" Cursor="Hand">
+                <Button x:Name="btnLogout" Click="btnLogout_Click" Margin="10 250 10 0" BorderBrush="#2EB0A1" Height="40" Background="#2EB0A1" Cursor="Hand">
                     <StackPanel Orientation="Horizontal" >
                         <Icon:PackIconMaterial Kind="Logout" FontSize="15"></Icon:PackIconMaterial>
                         <TextBlock Margin="10 0 " FontSize="14" Text="Logout                 " FontWeight="Bold"></TextBlock>
