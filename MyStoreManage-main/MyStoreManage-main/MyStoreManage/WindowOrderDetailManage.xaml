@@ -1,4 +1,4 @@
-﻿<Window x:Class="MyStoreManage.WindowOrderManage"
+﻿<Window x:Class="MyStoreManage.WindowOrderDetailManage"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
@@ -6,8 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyStoreManage"
         mc:Ignorable="d"
-        Title="WindowOrderManage"
-       MinWidth="1000" MaxWidth="1000" 
+        Title="WindowOrderDetailManage" MinWidth="1000" MaxWidth="1000" 
     MinHeight="720" MaxHeight="720"
     WindowStartupLocation="CenterScreen" >
     <Grid>
@@ -44,10 +43,17 @@
                     </StackPanel>
                 </Button>
                 <Separator Margin="20 20 20 0" Height="1" Background="#1F786E"></Separator>
-                <Button x:Name="btnOpenOrdersManage" Margin="10 5 10 0" BorderBrush="#2EB0A1" Height="40" Background="#2EB0A1" Cursor="Hand">
+                <Button x:Name="btnOpenOrdersManage" Click="btnOpenOrdersManage_Click" Margin="10 5 10 0" BorderBrush="#2EB0A1" Height="40" Background="#2EB0A1" Cursor="Hand">
                     <StackPanel Orientation="Horizontal" >
                         <Icon:PackIconMaterial Kind="OrderNumericAscending" FontSize="15"></Icon:PackIconMaterial>
                         <TextBlock Margin="10 0 " FontSize="14" Text="Orders Manage       " FontWeight="Bold"></TextBlock>
+                    </StackPanel>
+                </Button>
+                <Separator Margin="20 20 20 0" Height="1" Background="#1F786E"></Separator>
+                <Button x:Name="btnOpenOrdersReport" Click="btnOpenOrdersReport_Click" Margin="10 5 10 0" BorderBrush="#2EB0A1" Height="40" Background="#2EB0A1">
+                    <StackPanel Orientation="Horizontal" >
+                        <Icon:PackIconMaterial Kind="ReorderHorizontal" FontSize="15"></Icon:PackIconMaterial>
+                        <TextBlock Margin="10 0 " FontSize="14" Text="Orders Report       " FontWeight="Bold" Cursor="Hand"></TextBlock>
                     </StackPanel>
                 </Button>
                 <Separator Margin="20 20 20 0" Height="1" Background="#1F786E"></Separator>
@@ -57,7 +63,7 @@
                         <TextBlock Margin="10 0 " FontSize="14" Text="Staff Manage         " FontWeight="Bold"></TextBlock>
                     </StackPanel>
                 </Button>
-                <Button x:Name="btnLogout" Click="btnLogout_Click" Margin="10 250 10 0" BorderBrush="#2EB0A1" Height="40" Background="#2EB0A1" Cursor="Hand">
+                <Button x:Name="btnLogout" Click="btnLogout_Click"  Margin="10 200 10 0" BorderBrush="#2EB0A1" Height="40" Background="#2EB0A1" Cursor="Hand">
                     <StackPanel Orientation="Horizontal" >
                         <Icon:PackIconMaterial Kind="Logout" FontSize="15"></Icon:PackIconMaterial>
                         <TextBlock Margin="10 0 " FontSize="14" Text="Logout                 " FontWeight="Bold"></TextBlock>
@@ -70,9 +76,9 @@
         <Border Grid.Column="1" Background="#2EB0A1" CornerRadius="0 30 0 50">
             <Canvas Grid.Column="1">
                 <!--search box-->
-                <Label Canvas.Left="24" Canvas.Top="21" HorizontalAlignment="Center" FontSize="15" VerticalAlignment="Top">Type To Search Orders ...</Label>
+                <Label Canvas.Left="10" Canvas.Top="20" HorizontalAlignment="Left" FontSize="15" VerticalAlignment="Center">Type To Search Products ...</Label>
                 <TextBox x:Name="txtSearch" Grid.Row="3" Height="25" Width="300" VerticalAlignment="Top" FontSize="15" Canvas.Left="200" Canvas.Top="23" HorizontalAlignment="Left"/>
-                <Button x:Name="btnSearch" Click="btnSearch_Click" Canvas.Left="505" Canvas.Top="23" Height="25" RenderTransformOrigin="-0.583,-0.438" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White" BorderBrush="White" Cursor="Hand">
+                <Button x:Name="btnSearch" Click="btnSearch_Click" Canvas.Left="505" Canvas.Top="23" Height="25" RenderTransformOrigin="-0.583,-0.438" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White" BorderBrush="White">
                     <Icon:PackIconMaterial Kind="Magnify"  Width="20" Height="15" RenderTransformOrigin="0.45,-0.664" Cursor="Hand"></Icon:PackIconMaterial>
                 </Button>
                 <Button x:Name="btnOpenMyAccount" Click="btnOpenMyAccount_Click" Canvas.Left="625" Canvas.Top="25" Height="45" RenderTransformOrigin="-0.583,-0.438" HorizontalAlignment="Left" VerticalAlignment="Center" Background="#2EB0A1" BorderBrush="#2EB0A1" Cursor="Hand">
@@ -91,21 +97,21 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Label Name="lblInstruction" Foreground="Red" FontWeight="DemiBold"
-                    FontSize="25" Content="Orders Manage"></Label>
+                    FontSize="25" Content="Order Details Manage"></Label>
 
-                <Separator Margin="5,47,600,228" Height="1" Background="Red"></Separator>
+                <Separator Margin="5,47,530,228" Height="1" Background="Red"></Separator>
                 <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Width="800">
                     <StackPanel Margin="20 60 20 15">
-                        <Label Name="lblOrderID" Content="OrderID"></Label>
-                        <TextBox Name="txtOrderID" HorizontalAlignment="Left"  VerticalAlignment="Center"
+                        <Label Name="lblProductID" Content="ProductID"></Label>
+                        <TextBox Name="txtProductID" HorizontalAlignment="Left"  VerticalAlignment="Center"
                         IsReadOnly="True" Height="25" Width="350" FontSize="15"
                         Text="{Binding Path=ProductId, Mode=Oneway}"
                         DataContext="{Binding ElementName=lvProducts, Path=SelectedItem}"></TextBox>
-                        <Label Name="lblOrderDate" Content="Order Date"></Label>
-                        <DatePicker Name="txtOrderName" HorizontalAlignment="Left" 
+                        <Label Name="lblProductName" Content="Product Name"></Label>
+                        <TextBox Name="txtProductName" HorizontalAlignment="Left" 
                         Height="25" Width="350"  VerticalAlignment="Center" FontSize="15"
                         Text="{Binding Path=ProductName, Mode=Oneway}"
-                        DataContext="{Binding ElementName=lvProducts, Path=SelectedItem}"></DatePicker>
+                        DataContext="{Binding ElementName=lvProducts, Path=SelectedItem}"></TextBox>
                         <Label Name="lblUnitPrice" Content="Unit Price"></Label>
                         <TextBox Name="txtUnitPrice" HorizontalAlignment="Left" VerticalAlignment="Center"
                         Height="25" Width="350" FontSize="15"

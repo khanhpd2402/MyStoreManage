@@ -18,16 +18,31 @@ using System.Windows.Shapes;
 namespace MyStoreManage
 {
     /// <summary>
-    /// Interaction logic for WindowOrderDetailManage.xaml
+    /// Interaction logic for WindowOrderManage.xaml
     /// </summary>
-    public partial class WindowOrderDetailManage : Window
+    public partial class WindowOrderManage : Window
     {
         private readonly MyStoreContext _storeContext;
-        public WindowOrderDetailManage(MyStoreContext storeContext)
+        public WindowOrderManage(MyStoreContext storeContext)
         {
             InitializeComponent();
             _storeContext = storeContext;
             HandleStaffNameNavigate();
+            HandleButttonRole();
+        }
+        public void HandleButttonRole()
+        {
+            var role = SessionService.Instance.GetRoleInSession();
+            if (role == 1)
+            {
+                btnOpenOrdersManage.Visibility = Visibility.Hidden;
+            }
+            else if (role == 2)
+            {
+                btnOpenProductsManage.Visibility = Visibility.Hidden;
+                btnOpenCategoriesManage.Visibility = Visibility.Hidden;
+                btnOpenStaffManage.Visibility = Visibility.Hidden;
+            }
         }
         public void HandleStaffNameNavigate()
         {
@@ -53,14 +68,6 @@ namespace MyStoreManage
 
         }
         //ToolBar
-        private void btnOpenOrdersManage_Click(object sender, RoutedEventArgs e)
-        {
-            var windowOrderManage = new WindowOrderManage(_storeContext);
-            this.Close();
-            windowOrderManage.Show();
-            e.Handled = true;
-        }
-
         private void btnOpenStaffManage_Click(object sender, RoutedEventArgs e)
         {
             var windowStaffManage = new WindowStaffManage(_storeContext);
@@ -98,6 +105,11 @@ namespace MyStoreManage
             this.Close();
             WindowMyProfile.Show();
             e.Handled = true;
+        }
+
+        private void btnOpenOrdersReport_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
