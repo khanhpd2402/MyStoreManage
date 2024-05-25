@@ -13,5 +13,7 @@ namespace MyStoreManage.Models
 
         public virtual Order Order { get; set; } = null!;
         public virtual Product Product { get; set; } = null!;
+        public int Total => Quantity * UnitPrice;
+
     }
 }

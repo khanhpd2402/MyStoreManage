@@ -5,6 +5,7 @@ namespace MyStoreManage.Models
 {
     public partial class Staff
     {
+
         public Staff()
         {
             Orders = new HashSet<Order>();
