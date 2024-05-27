@@ -46,22 +46,149 @@ namespace MyStoreManage
 
         private void btnInsert_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(SessionService.Instance.GetNameInSession());
-        }
 
+
+            try
+            {
+                if (cbbCategory.SelectedItem == null)
+                {
+                    MessageBox.Show("Please select a category before inserting a product.");
+                    return;
+                }
+
+                var newProduct = new Product
+                {
+                    ProductName = txtProductName.Text,
+
+                    CategoryId = ((Category)cbbCategory.SelectedItem).CategoryId,
+                    UnitPrice = int.Parse(txtUnitPrice.Text)
+
+                };
+
+                _context.Products.Add(newProduct);
+                _context.SaveChanges();
+
+                HandleBeforeLoadGirdView();
+                MessageBox.Show("Product inserted successfully!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error inserting product: {ex.Message}");
+            }
+
+
+        }
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
+            if (lvProducts.SelectedItem != null)
+            {
+                var selectedProduct = (Product)lvProducts.SelectedItem;
+                selectedProduct.ProductName = txtProductName.Text;
+                selectedProduct.UnitPrice = int.Parse(txtUnitPrice.Text);
+                selectedProduct.CategoryId = ((Category)cbbCategory.SelectedItem).CategoryId;
+                try
+                {
+                    _context.Products.Update(selectedProduct);
+                    _context.SaveChanges();
+                    HandleBeforeLoadGirdView();
+                    MessageBox.Show("Update Successfully", "Notification");
+
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error updating product: {ex.Message}");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a product to update", "Notification");
+            }
 
         }
+
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
+            if (lvProducts.SelectedItem != null)
+            {
+                var selectedProduct = (Product)lvProducts.SelectedItem;
+                selectedProduct.ProductName = txtProductName.Text;
+
+                MessageBoxResult result = MessageBox.Show(
+                     $"Are you sure you want to delete the category '{selectedProduct.ProductName}'?",
+                     "Confirm Delete",
+                     MessageBoxButton.YesNo,
+                     MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        _context.Products.Remove(selectedProduct);
+                        _context.SaveChanges();
+                        HandleBeforeLoadGirdView();
+                        MessageBox.Show("Delete Successfully", "Notification");
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error delete product: {ex.Message}");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a product to delete", "Notification");
+            }
 
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                string productName = txtSearch.Text.Trim();
+                string unitPriceText = txtSearch_Copy.Text.Trim();
+                int? unitPrice = null;
 
+
+                if (!string.IsNullOrWhiteSpace(unitPriceText))
+                {
+                    unitPrice = int.Parse(unitPriceText);
+                }
+
+                var query = _context.Products
+                    .Include(x => x.Category)
+                    .AsQueryable();
+
+
+                if (!string.IsNullOrWhiteSpace(productName) && unitPrice.HasValue)
+                {
+                    query = query.Where(p => p.ProductName.Contains(productName) && p.UnitPrice == unitPrice);
+                }
+                else
+                {
+
+                    if (!string.IsNullOrWhiteSpace(productName))
+                    {
+                        query = query.Where(p => p.ProductName.Contains(productName));
+                    }
+
+                    if (unitPrice.HasValue)
+                    {
+                        query = query.Where(p => p.UnitPrice == unitPrice);
+                    }
+                }
+
+
+                lvProducts.ItemsSource = query.ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error searching products: {ex.Message}");
+            }
         }
         //ToolBar
         private void btnOpenCategoriesManage_Click(object sender, RoutedEventArgs e)
@@ -104,5 +231,25 @@ namespace MyStoreManage
             WindowMyProfile.Show();
             e.Handled = true;
         }
+
+        //private void SearchProduct()
+        //{
+        //    try
+        //    {
+        //        string keyword = txtSearch.Text;
+        //        lvProducts.ItemsSource = _context.Products
+        //            .Include(x => x.Category)
+        //            .Where(p => p.ProductName.Contains(keyword))
+        //            .ToList();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show($"Error searching products: {ex.Message}");
+        //    }
+        //}
+        //private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    SearchProduct();
+        //}
     }
 }
