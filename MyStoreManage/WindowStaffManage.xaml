@@ -5,10 +5,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyStoreManage"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         MinWidth="1000" MaxWidth="1000" 
         MinHeight="720" MaxHeight="720"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" Loaded="Staff_Loaded"
+        ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="47*"></ColumnDefinition>
@@ -50,13 +52,19 @@
                     </StackPanel>
                 </Button>
                 <Separator Margin="20 20 20 0" Height="1" Background="#1F786E"></Separator>
+                <Button x:Name="btnOpenOrdersReport" Click="btnOpenOrdersReport_Click" Margin="10 5 10 0" BorderBrush="#2EB0A1" Height="40" Background="#2EB0A1">
+                    <StackPanel Orientation="Horizontal" >
+                        <Icon:PackIconMaterial Kind="ReorderHorizontal" FontSize="15"></Icon:PackIconMaterial>
+                        <TextBlock Margin="10 0 " FontSize="14" Text="Orders Report       " FontWeight="Bold" Cursor="Hand"></TextBlock>
+                    </StackPanel>
+                </Button>
+                <Separator Margin="20 20 20 0" Height="1" Background="#1F786E"></Separator>
                 <Button x:Name="btnOpenStaffManage" Margin="10 5 10 0" BorderBrush="#2EB0A1" Height="40" Background="#2EB0A1" Cursor="Hand">
                     <StackPanel Orientation="Horizontal" >
                         <Icon:PackIconMaterial Kind="HumanCane" FontSize="15"></Icon:PackIconMaterial>
                         <TextBlock Margin="10 0 " FontSize="14" Text="Staff Manage         " FontWeight="Bold"></TextBlock>
                     </StackPanel>
                 </Button>
-                <Separator Margin="20 20 20 0" Height="1" Background="#1F786E"></Separator>
                 <Button x:Name="btnOpenReport" Click="btnOpenReport_Click" Margin="10 5 10 0" BorderBrush="#2EB0A1" Height="40" Background="#2EB0A1" Cursor="Hand">
                     <StackPanel Orientation="Horizontal" >
                         <Icon:PackIconMaterial Kind="Book" FontSize="15"></Icon:PackIconMaterial>
@@ -76,7 +84,7 @@
         <Border Grid.Column="1" Background="#2EB0A1" CornerRadius="0 30 0 50">
             <Canvas Grid.Column="1">
                 <!--search box-->
-                <Label Canvas.Left="10" Canvas.Top="20" HorizontalAlignment="Left" FontSize="15" VerticalAlignment="Center">Type To Search Products ...</Label>
+                <Label Canvas.Left="10" Canvas.Top="20" HorizontalAlignment="Left" FontSize="15" VerticalAlignment="Center">Type To Search Staff ...</Label>
                 <TextBox x:Name="txtSearch" Grid.Row="3" Height="25" Width="300" VerticalAlignment="Top" FontSize="15" Canvas.Left="200" Canvas.Top="23" HorizontalAlignment="Left"/>
                 <Button x:Name="btnSearch" Click="btnSearch_Click" Canvas.Left="505" Canvas.Top="23" Height="25" RenderTransformOrigin="-0.583,-0.438" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White" BorderBrush="White" Cursor="Hand">
                     <Icon:PackIconMaterial Kind="Magnify"  Width="20" Height="15" RenderTransformOrigin="0.45,-0.664" Cursor="Hand"></Icon:PackIconMaterial>
@@ -102,25 +110,30 @@
                 <Separator Margin="5,47,600,228" Height="1" Background="Red"></Separator>
                 <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Width="800">
                     <StackPanel Margin="20 60 20 15">
-                        <Label Name="lblProductID" Content="StaffID"></Label>
+                        <Label Name="lblStaffID" Content="StaffID"></Label>
                         <TextBox Name="txtStaffID" HorizontalAlignment="Left"  VerticalAlignment="Center"
                     IsReadOnly="True" Height="25" Width="350" FontSize="15"
-                    Text="{Binding Path=ProductId, Mode=Oneway}"
-                    DataContext="{Binding ElementName=lvProducts, Path=SelectedItem}"></TextBox>
-                        <Label Name="lblProductName" Content="Product Name"></Label>
-                        <TextBox Name="txtProductName" HorizontalAlignment="Left" 
+                    Text="{Binding Path=StaffId, Mode=Oneway}"
+                    DataContext="{Binding ElementName=lvStaff, Path=SelectedItem}"></TextBox>
+
+                        <Label Name="lblStaffName" Content="Staff Name"></Label>
+                        <TextBox Name="txtStaffName" HorizontalAlignment="Left" 
                     Height="25" Width="350"  VerticalAlignment="Center" FontSize="15"
-                    Text="{Binding Path=ProductName, Mode=Oneway}"
-                    DataContext="{Binding ElementName=lvProducts, Path=SelectedItem}"></TextBox>
-                        <Label Name="lblUnitPrice" Content="Unit Price"></Label>
-                        <TextBox Name="txtUnitPrice" HorizontalAlignment="Left" VerticalAlignment="Center"
+                    Text="{Binding Path=Name, Mode=Oneway}"
+                    DataContext="{Binding ElementName=lvStaff, Path=SelectedItem}"></TextBox>
+
+                        <Label Name="lblPassword" Content="Password"></Label>
+                        <TextBox Name="txtPassword" HorizontalAlignment="Left" VerticalAlignment="Center"
                     Height="25" Width="350" FontSize="15"
-                    Text="{Binding Path=UnitPrice, Mode=Oneway}"
-                    DataContext="{Binding ElementName=lvProducts, Path=SelectedItem}"></TextBox>
-                        <Label Name="lblCategory" Content="Category"></Label>
-                        <ComboBox Name="cbbCategory" DisplayMemberPath="CategoryName"  Text="{Binding Path= Category.CategoryName, Mode=OneWay}"
-                           DataContext="{Binding Path=SelectedItem, ElementName=lvProducts}">
-                        </ComboBox>
+                    Text="{Binding Path=Password, Mode=Oneway}"
+                    DataContext="{Binding ElementName=lvStaff, Path=SelectedItem}"></TextBox>
+
+                        <Label Name="lblRole" Content="Role"></Label>
+                        <TextBox Name="txtRole" HorizontalAlignment="Left" VerticalAlignment="Center"
+                    Height="25" Width="350" FontSize="15"
+                    Text="{Binding Path=Role, Mode=Oneway}"
+                    DataContext="{Binding ElementName=lvStaff, Path=SelectedItem}"></TextBox>
+
                     </StackPanel>
 
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="20 80 20 15">
@@ -132,19 +145,18 @@
                 Click="btnDelete_Click" Cursor="Hand"></Button>
                     </StackPanel>
                 </StackPanel>
-                <ListView Grid.Row="1" Name="lvProducts" Margin="20 0 20 0" Width="auto">
+                <ListView Grid.Row="1" Name="lvStaff" Margin="20 0 20 0" Width="auto">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Product ID" Width="100"
-                                DisplayMemberBinding="{Binding Path=ProductId}"></GridViewColumn>
-                            <GridViewColumn Header="Product Name" Width="100"
-                                DisplayMemberBinding="{Binding Path=ProductName}"></GridViewColumn>
-                            <GridViewColumn Header="Unit Price" Width="100"
-                                DisplayMemberBinding="{Binding Path=UnitPrice}"></GridViewColumn>
-                            <GridViewColumn Header="Category ID" Width="100"
-                                DisplayMemberBinding="{Binding Path=CategoryId}"></GridViewColumn>
-                            <GridViewColumn Header="Category Name" Width="100"
-                                DisplayMemberBinding="{Binding Path=Category.CategoryName}"></GridViewColumn>
+                            <GridViewColumn Header="Staff ID" Width="100"
+                                DisplayMemberBinding="{Binding Path=StaffId}"></GridViewColumn>
+                            <GridViewColumn Header="Staff Name" Width="100"
+                                DisplayMemberBinding="{Binding Path=Name}"></GridViewColumn>
+                            <GridViewColumn Header="Password" Width="100"
+                                DisplayMemberBinding="{Binding Path=Password}"></GridViewColumn>
+                            <GridViewColumn Header="Staff Role" Width="100"
+                                DisplayMemberBinding="{Binding Path=Role}"></GridViewColumn>
+
                         </GridView>
                     </ListView.View>
                 </ListView>

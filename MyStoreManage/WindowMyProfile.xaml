@@ -63,6 +63,7 @@
                         <TextBlock Margin="10 0 " FontSize="14" Text="Report                   " FontWeight="Bold"></TextBlock>
                     </StackPanel>
                 </Button>
+                
                 <Button x:Name="btnLogout" Click="btnLogout_Click" Margin="10 200 10 0" BorderBrush="#2EB0A1" Height="40" Background="#2EB0A1" Cursor="Hand">
                     <StackPanel Orientation="Horizontal" >
                         <Icon:PackIconMaterial Kind="Logout" FontSize="15"></Icon:PackIconMaterial>

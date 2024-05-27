@@ -37,12 +37,12 @@ namespace MyStoreManage
                     //handle session
                     SessionService.Instance.SetSession(aStaff.StaffId, aStaff.Role, aStaff.Name);
                     //admin dang nhap thi den product
-                    if(aStaff.Role == 1)
+                    if(aStaff.Role == 0)
                     {
                         var windowProductManage = new WindowProductManage(_storeContext);
                         windowProductManage.Show();
                     }//staff dang nhap thi den order cua staff do
-                    else if(aStaff.Role == 2)
+                    else if(aStaff.Role == 1)
                     {
                         var windowOrderManage = new WindowOrderManage(_storeContext);
                         windowOrderManage.Show();

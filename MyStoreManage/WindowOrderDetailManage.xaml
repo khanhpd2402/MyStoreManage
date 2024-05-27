@@ -56,7 +56,6 @@
                         <TextBlock Margin="10 0 " FontSize="14" Text="Staff Manage         " FontWeight="Bold"></TextBlock>
                     </StackPanel>
                 </Button>
-                <Separator Margin="20 20 20 0" Height="1" Background="#1F786E"></Separator>
                 <Button x:Name="btnOpenReport" Click="btnOpenReport_Click" Margin="10 5 10 0" BorderBrush="#2EB0A1" Height="40" Background="#2EB0A1" Cursor="Hand">
                     <StackPanel Orientation="Horizontal" >
                         <Icon:PackIconMaterial Kind="Book" FontSize="15"></Icon:PackIconMaterial>
@@ -93,53 +92,55 @@
         <Grid Grid.Column="1" Grid.Row="1" Margin="10" VerticalAlignment="Top">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition/>
+                    <RowDefinition Height="0*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Label Name="lblInstruction" Foreground="Red" FontWeight="DemiBold"
                     FontSize="25" Content="Order Details Manage"></Label>
 
-                <Separator Margin="5,47,530,228" Height="1" Background="Red"></Separator>
+                <Separator Margin="5,77,530,249" Background="Red"/>
                 <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Width="800">
                     <StackPanel Margin="20 60 20 15">
-                        <Label Name="lblOrderId" Content="OrderId"></Label>
-                        <TextBox Name="txtOrderId" HorizontalAlignment="Left"  VerticalAlignment="Center"
+                        <!--<Label Name="lblProductID" Content="ProductID"></Label>-->
+                        <TextBox Name="txtProductID" HorizontalAlignment="Left"  VerticalAlignment="Center"
                         IsReadOnly="True" Height="25" Width="350" FontSize="15"
-                        Text="{Binding Path=OrderId, Mode=Oneway}"
-                        DataContext="{Binding ElementName=lvOrderDetails, Path=SelectedItem}"></TextBox>
-                        <Label Name="lblProductName" Content="Product Name"></Label>
-                        <TextBox Name="txtProductName" HorizontalAlignment="Left" 
-                        Height="25" Width="350"  VerticalAlignment="Center" FontSize="15"
-                        Text="{Binding Path=Product.ProductName, Mode=Oneway}"
-                        DataContext="{Binding ElementName=lvOrderDetails, Path=SelectedItem}"></TextBox>
+                        Text="{Binding Path=ProductId, Mode=Oneway}"
+                        DataContext="{Binding ElementName=lvProducts, Path=SelectedItem}" Visibility="Hidden"></TextBox>
+                        <Label Name="lblProductName" Content="ProductName">
+                        </Label>
+                        <ComboBox Name="cbbProductName" DisplayMemberPath="ProductName"  Text="{Binding Path= Product.ProductName, Mode=OneWay}"
+                                  SelectionChanged="Selected_Product" DataContext="{Binding Path=SelectedItem, ElementName=lvProducts}">
+                        </ComboBox>
+
                         <Label Name="lblUnitPrice" Content="Unit Price"></Label>
                         <TextBox Name="txtUnitPrice" HorizontalAlignment="Left" VerticalAlignment="Center"
                         Height="25" Width="350" FontSize="15"
                         Text="{Binding Path=UnitPrice, Mode=Oneway}"
-                        DataContext="{Binding ElementName=lvOrderDetails, Path=SelectedItem}"></TextBox>
-                        <Label Name="lbQuantity" Content="Quantity"></Label>
+                        DataContext="{Binding ElementName=lvProducts, Path=SelectedItem}"></TextBox>
+                        <Label Name="lblQuantity" Content="Quantity"></Label>
                         <TextBox Name="txtQuantity" HorizontalAlignment="Left" VerticalAlignment="Center"
                         Height="25" Width="350" FontSize="15"
-                        Text="{Binding Path=Quantity, Mode=Oneway}"
-                               DataContext="{Binding ElementName=lvOrderDetails, Path=SelectedItem}">
-                        </TextBox>
+                        Text="{Binding Path=UnitPrice, Mode=Oneway}"
+                        DataContext="{Binding ElementName=lvProducts, Path=SelectedItem}"></TextBox>
+
                     </StackPanel>
 
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="20 80 20 15">
-                        <Button x:Name="btnInsert" Margin="10" Width="80" Content="Insert" BorderBrush="#2EB0A1" Background="#2EB0A1" FontWeight="Bold" Height="25" FontSize="14"
-                            Click="btnInsert_Click" Cursor="Hand"></Button>
+                        <Button x:Name="btnInsert" Width="80" Content="Insert" BorderBrush="#2EB0A1" Background="#2EB0A1" FontWeight="Bold" Height="25" FontSize="14"
+                            Click="btnInsert_Click" Cursor="Hand"/>
                         <Button x:Name="btnUpdate" Margin="10" Width="80" Content="Update" BorderBrush="#2EB0A1" Background="#2EB0A1" FontWeight="Bold" Height="25" FontSize="14"
-                            Click="btnUpdate_Click" Cursor="Hand"></Button>
-                        <Button x:Name="btnDelete" Margin="10" Width="80" Content="Delete" BorderBrush="#2EB0A1" Background="#2EB0A1" FontWeight="Bold" Height="25" FontSize="14"
-                            Click="btnDelete_Click" Cursor="Hand"></Button>
+                            Click="btnUpdate_Click" Cursor="Hand"/>
+                        <Button x:Name="btnDelete" Width="80" Content="Delete" BorderBrush="#2EB0A1" Background="#2EB0A1" FontWeight="Bold" Height="25" FontSize="14"
+                            Click="btnDelete_Click" Cursor="Hand"/>
+
                     </StackPanel>
                 </StackPanel>
-                <ListView Grid.Row="1" Name="lvOrderDetails" Margin="20 0 20 0" Width="auto">
+                <ListView Grid.Row="1" Name="lvOrderDetail" Margin="20,31,20,-186" Width="auto" Height="150" ScrollViewer.VerticalScrollBarVisibility="Auto"  SelectionChanged="lvOrderDetail_SelectionChanged">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="OrderDetail ID" Width="100"
+                            <GridViewColumn Header="Order Detail Id" Width="100"
                                     DisplayMemberBinding="{Binding Path=OrderDetailId}"></GridViewColumn>
-                            <GridViewColumn Header="Order ID" Width="100"
+                            <GridViewColumn Header="Order Id" Width="100"
                                     DisplayMemberBinding="{Binding Path=OrderId}"></GridViewColumn>
                             <GridViewColumn Header="Product Name" Width="100"
                                     DisplayMemberBinding="{Binding Path=Product.ProductName}"></GridViewColumn>
@@ -147,11 +148,13 @@
                                     DisplayMemberBinding="{Binding Path=UnitPrice}"></GridViewColumn>
                             <GridViewColumn Header="Quantity" Width="100"
                                     DisplayMemberBinding="{Binding Path=Quantity}"></GridViewColumn>
-                            
+                            <GridViewColumn Header="Total" Width="200"
+                                    DisplayMemberBinding="{Binding Path=Total}"></GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>
             </Grid>
         </Grid>
+       
     </Grid>
 </Window>

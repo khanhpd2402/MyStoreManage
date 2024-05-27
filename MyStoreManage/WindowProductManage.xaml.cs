@@ -18,6 +18,21 @@ namespace MyStoreManage
             HandleBeforeLoadGirdView();
             HandleComboboxCategory();
             HandleStaffNameNavigate();
+            HandleButttonRole();
+        }
+        public void HandleButttonRole()
+        {
+            var role = SessionService.Instance.GetRoleInSession();
+            if (role == 0)
+            {
+                btnOpenOrdersManage.Visibility = Visibility.Hidden;
+            }
+            else if (role == 1)
+            {
+                btnOpenProductsManage.Visibility = Visibility.Hidden;
+                btnOpenCategoriesManage.Visibility = Visibility.Hidden;
+                btnOpenStaffManage.Visibility = Visibility.Hidden;
+            }
         }
         public void HandleStaffNameNavigate()
         {
